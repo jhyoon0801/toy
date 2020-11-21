@@ -1,7 +1,9 @@
 package com.jhyoon0801.toy.dto;
 
 import com.jhyoon0801.toy.contant.ErrorStatus;
+import lombok.Data;
 
+@Data
 public class Result {
 
     private int errorCode;
@@ -9,10 +11,10 @@ public class Result {
     private String errorCause;
     private Object resultData;
 
-    public Result(ErrorStatus errorStatus, Object resultData){
+    public Result(ErrorStatus errorStatus, String errorCause, Object resultData){
         this.errorCode = errorStatus.getErrorCode();
         this.errorMessage = errorStatus.getErrorMessage();
-        this.errorCause = errorStatus.getErrorCause();
+        this.errorCause = errorCause;
         this.resultData = resultData;
     }
 }

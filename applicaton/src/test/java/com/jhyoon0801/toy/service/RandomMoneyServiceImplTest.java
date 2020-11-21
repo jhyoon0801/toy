@@ -8,9 +8,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class RandomMoneyServiceImplTest {
 
+
     @Test
     public void DUPLICATED_TOKEN() {
         Assert.assertEquals(true, false);
     }
+
 
 }
