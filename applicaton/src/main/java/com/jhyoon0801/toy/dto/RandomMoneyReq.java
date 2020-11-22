@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class RandomMoneyReq {
-    private Long totalMoney;
+    private Integer totalMoney;
     private Integer distributionSize;
 }

@@ -1,9 +1,11 @@
 package com.jhyoon0801.toy.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.jhyoon0801.toy.contant.ErrorStatus;
 import lombok.Data;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Result {
 
     private int errorCode;

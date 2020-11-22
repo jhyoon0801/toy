@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhyoon0801.toy.dao.mapper.RandomMoneyMapper">
+    <insert id="insertRandomMoneyMeta" parameterType="RandomMoneyMeta" useGeneratedKeys="true">
+        insert into TB_RANDOM_MONEY (OWNER_ID, ROOM_ID, TOKEN, TOTAL_MONEY, DISTRIBUTION_SIZE, CRETE_DATETIME)
+        VALUES (#{ownerId}, #{roomId}, #{token}, #{totalMoney}, #{distributionSize}, NOW())
+    </insert>
+
+    <insert id="insertRandomMoneyDistribution" parameterType="java.util.List">
+        insert into TB_RANDOM_MONEY_DIST (META_INFO_SEQ, DIST_SEQ, AMOUNT, CRETE_DATETIME)
+        VALUES
+        <foreach collection="list" item="item" separator=" , ">
+            (#{item.metaInfoSeq}, #{item.distSeq}, #{item.amount}, NOW())
+        </foreach>
+    </insert>
+
+    <select id="selectRandomMoneyMeta" resultType="RandomMoneyMeta">
+        select OWNER_ID, ROOM_ID, TOKEN, TOTAL_MONEY, DISTRIBUTION_SIZE, CRETE_DATETIME
+        from TB_RANDOM_MONEY
+            where ROOM_ID = #{roomId} AND TOKEN = #{token} AND CRETE_DATETIME > DATE_SUB(NOW(), INTERVAL 7 DAY)
+    </select>
+
+    <select id="selectRandomMoneyReceiveInfo" resultType="ReceiveInfo">
+        select SEQ, META_INFO_SEQ, RECEIVER_ID, AMOUNT, CRETE_DATETIME
+        from TB_RANDOM_MONEY_RECEIVE_INFO
+        where META_INFO_SEQ = #{metaSeq}
+    </select>
+</mapper>
