@@ -9,16 +9,18 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class RandomMoneyServiceGetInfoTest {
@@ -70,6 +72,7 @@ public class RandomMoneyServiceGetInfoTest {
     public void SUCCESS() {
 
         RandomMoneyInfoDto mockData = makeRandomMoneyInfoDto();
+
         when(randomMoneyDao.readRandomMoneyInfo(this.roomId, this.token)).thenReturn(mockData);
 
         RandomMoneyInfoDto result = randomMoneyService.getRandomMoneyInfo(this.ownerUserId, this.roomId, this.token);
@@ -108,10 +111,5 @@ public class RandomMoneyServiceGetInfoTest {
             return;
         }
         Assert.fail();
-    }
-
-    @Test
-    public void OVER_7_DAYS() {
-        // local db?
     }
 }

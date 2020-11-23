@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jhyoon0801.toy.dao.mapper.RandomMoneyMapper">
-    <insert id="insertRandomMoneyMeta" parameterType="RandomMoneyMeta" useGeneratedKeys="true">
+    <insert id="insertRandomMoneyMeta" parameterType="com.jhyoon0801.toy.domain.RandomMoneyMeta" useGeneratedKeys="true">
         insert into TB_RANDOM_MONEY (OWNER_ID, ROOM_ID, TOKEN, TOTAL_MONEY, DISTRIBUTION_SIZE)
         VALUES (#{ownerId}, #{roomId}, #{token}, #{totalMoney}, #{distributionSize})
     </insert>
@@ -14,18 +14,38 @@
         </foreach>
     </insert>
 
+
     <insert id="insertTempReceiverInfo">
         insert into TB_RANDOM_MONEY_RECEIVER_ORDER_TMP (META_INFO_SEQ, RECEIVER_ID)
         VALUES (#{metaSeq}, #{receiverId})
     </insert>
 
-    <select id="selectRandomMoneyMeta" resultType="RandomMoneyMeta">
-        select OWNER_ID, ROOM_ID, TOKEN, TOTAL_MONEY, DISTRIBUTION_SIZE, CRETE_DATETIME
+    <select id="selectOrderOfReceiver" resultType="int">
+        select COUNT(1)
+        from TB_RANDOM_MONEY_RECEIVER_ORDER_TMP
+        where META_INFO_SEQ = #{metaSeq} AND SEQ <![CDATA[ < ]]> (SELECT SEQ from TB_RANDOM_MONEY_RECEIVER_ORDER_TMP WHERE META_INFO_SEQ = #{metaSeq} AND RECEIVER_ID = #{receiverId})
+    </select>
+
+    <insert id="insertRandomMoneyReceiveInfo">
+        insert into TB_RANDOM_MONEY_RECEIVE_INFO (META_INFO_SEQ, DIST_SEQ, RECEIVER_ID, AMOUNT)
+        select #{metaSeq}, #{order}, #{receiverId}, AMOUNT
+        from TB_RANDOM_MONEY_DIST where META_INFO_SEQ = #{metaSeq} AND DIST_SEQ = #{order}
+    </insert>
+
+    <select id="selectRandomMoneyDistAmount" resultType="int">
+        select AMOUNT
+        from TB_RANDOM_MONEY_DIST
+        where META_INFO_SEQ = #{metaSeq} AND DIST_SEQ = #{distSeq}
+    </select>
+
+
+    <select id="selectRandomMoneyMeta" resultType="com.jhyoon0801.toy.domain.RandomMoneyMeta">
+        select SEQ, OWNER_ID, ROOM_ID, TOKEN, TOTAL_MONEY, DISTRIBUTION_SIZE, CRETE_DATETIME
         from TB_RANDOM_MONEY
             where ROOM_ID = #{roomId} AND TOKEN = #{token} AND CRETE_DATETIME > DATE_SUB(NOW(), INTERVAL #{duration} DAY)
     </select>
 
-    <select id="selectRandomMoneyReceiveInfo" resultType="ReceiveInfo">
+    <select id="selectRandomMoneyReceiveInfo" resultType="com.jhyoon0801.toy.domain.ReceiveInfo">
         select DIST_SEQ, META_INFO_SEQ, RECEIVER_ID, AMOUNT, CRETE_DATETIME
         from TB_RANDOM_MONEY_RECEIVE_INFO
         where META_INFO_SEQ = #{metaSeq}

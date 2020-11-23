@@ -59,7 +59,7 @@ public class RandomMoneyServiceImpl implements RandomMoneyService {
         if(meta.getOwnerId().equals(userId)){
             throw new RandomMoneyException(ErrorStatus.NOT_ALLOWED_FOR_OWNER, "Request from owner");
         }
-        if(!meta.getReceiveInfoDtoList().stream().filter(e->e.getReceiverId().equals(userId)).findFirst().isPresent()){
+        if(meta.getReceiveInfoDtoList().stream().filter(e->e.getReceiverId().equals(userId)).findFirst().isPresent()){
             throw new RandomMoneyException(ErrorStatus.ALREADY_RECEIVE, "You have already received this random money");
         }
 

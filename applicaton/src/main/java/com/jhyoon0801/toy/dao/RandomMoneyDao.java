@@ -43,7 +43,7 @@ public class RandomMoneyDao {
     }
 
     public int getOrderOfReceiver(Integer metaSeq, String receiverId) {
-        return randomMoneyMapper.selectOrderOfReceiver(metaSeq, receiverId);
+        return randomMoneyMapper.selectOrderOfReceiver(metaSeq, receiverId)+1;
     }
 
     public ReceiveInfoDto updateRandomMoneyReceiveInfo(Integer metaSeq, String receiverId, Integer order) {

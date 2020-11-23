@@ -15,7 +15,7 @@ public interface RandomMoneyMapper {
     int insertRandomMoneyMeta(RandomMoneyMeta randomMoneyMeta);
     void insertRandomMoneyDistribution(List<DistributionInfo> distInfoList);
 
-    int insertTempReceiverInfo(@Param("metaSeq") Integer metaSeq, @Param("receiverId") String receiverId);
+    void insertTempReceiverInfo(@Param("metaSeq") Integer metaSeq, @Param("receiverId") String receiverId);
     int selectOrderOfReceiver(@Param("metaSeq") Integer metaSeq, @Param("receiverId") String receiverId);
     int insertRandomMoneyReceiveInfo(@Param("metaSeq") Integer metaSeq, @Param("receiverId") String receiverId, @Param("order") Integer order);
     int selectRandomMoneyDistAmount(@Param("metaSeq") Integer metaSeq, @Param("distSeq") Integer distSeq);

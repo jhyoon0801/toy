@@ -5,8 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MapperScanConfig {
-
-    @MapperScan(basePackages = {"com.jhyoon0801.toy.dao.mapper"}
+    @MapperScan(basePackages = {"com.jhyoon0801.toy.dao"}
             , sqlSessionFactoryRef = "randomMoneySqlSessionFactory")
     public class randomMoneyMapperScan {
 

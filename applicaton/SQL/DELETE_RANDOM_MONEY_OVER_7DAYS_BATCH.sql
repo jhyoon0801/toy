@@ -1,0 +1,4 @@
+DELETE FROM toy.tb_random_money WHERE CRETE_DATETIME < DATE_SUB(NOW(), INTERVAL 7 DAY);
+DELETE FROM toy.tb_random_money_dist WHERE CRETE_DATETIME < DATE_SUB(NOW(), INTERVAL 7 DAY);
+DELETE FROM toy.tb_random_money_receive_info WHERE CRETE_DATETIME < DATE_SUB(NOW(), INTERVAL 7 DAY);
+DELETE FROM toy.tb_random_money_receiver_order_tmp WHERE CRETE_DATETIME < DATE_SUB(NOW(), INTERVAL 7 DAY);
