@@ -38,9 +38,7 @@ public class RandomMoneyInterceptorTest {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(randomMoneyController).build();
 
-        receiveInfoDto = new ReceiveInfoDto();
-        receiveInfoDto.setAmount(5000);
-        receiveInfoDto.setReceiverId(this.userId);
+        receiveInfoDto = new ReceiveInfoDto(this.userId, 5000);
     }
 
     @Test

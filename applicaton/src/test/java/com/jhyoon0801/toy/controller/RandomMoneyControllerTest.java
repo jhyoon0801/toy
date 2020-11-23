@@ -68,9 +68,7 @@ public class RandomMoneyControllerTest {
     public void SUCCESS_RECEIVE(){
         String token = "abc";
 
-        ReceiveInfoDto mockData = new ReceiveInfoDto();
-        mockData.setAmount(5000);
-        mockData.setReceiverId(this.firstReceiverUserId);
+        ReceiveInfoDto mockData = new ReceiveInfoDto(this.firstReceiverUserId, 5000);
 
         when(randomMoneyService.receiveRandomMoney(this.ownerUserId, this.roomId, token)).thenReturn(mockData);
 
@@ -87,24 +85,19 @@ public class RandomMoneyControllerTest {
 
         Date createdDate = DateUtils.addDays(new Date(), -3);
 
-        ReceiveInfoDto mockDataFirst = new ReceiveInfoDto();
-        mockDataFirst.setAmount(7000);
-        mockDataFirst.setReceiverId(this.firstReceiverUserId);
-
-        ReceiveInfoDto mockDataSecond = new ReceiveInfoDto();
-        mockDataSecond.setAmount(3000);
-        mockDataSecond.setReceiverId(this.secondReceiverUserId);
+        ReceiveInfoDto mockDataFirst = new ReceiveInfoDto(this.firstReceiverUserId, 7000);
+        ReceiveInfoDto mockDataSecond = new ReceiveInfoDto(this.secondReceiverUserId, 3000);
 
         List<ReceiveInfoDto> mockDataList = new ArrayList<>();
         mockDataList.add(mockDataFirst);
         mockDataList.add(mockDataSecond);
 
-        RandomMoneyInfoDto mockData = RandomMoneyInfoDto.builder()
-                .createdTimeStamp(new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ").format(createdDate))
-                .totalMoney(10000)
-                .receivedMoney(10000)
-                .receiveInfoDtoList(mockDataList)
-                .build();
+        RandomMoneyInfoDto mockData = new RandomMoneyInfoDto();
+        mockData.setCreteDatetime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ").format(createdDate));
+        mockData.setTotalMoney(10000);
+        mockData.setTotalMoney(10000);
+        mockData.setReceivedMoney(10000);
+        mockData.setReceiveInfoDtoList(mockDataList);
 
         when(randomMoneyService.getRandomMoneyInfo(this.ownerUserId, this.roomId, token)).thenReturn(mockData);
 
@@ -112,7 +105,7 @@ public class RandomMoneyControllerTest {
         Assert.assertEquals(result.getErrorCode(), ErrorStatus.SUCCESS.getErrorCode());
         Assert.assertEquals(mockData.getTotalMoney(), ((RandomMoneyInfoDto)result.getResultData()).getTotalMoney());
         Assert.assertEquals(mockData.getReceivedMoney(), ((RandomMoneyInfoDto)result.getResultData()).getReceivedMoney());
-        Assert.assertEquals(mockData.getCreatedTimeStamp(), ((RandomMoneyInfoDto)result.getResultData()).getCreatedTimeStamp());
+        Assert.assertEquals(mockData.getCreteDatetime(), ((RandomMoneyInfoDto)result.getResultData()).getCreteDatetime());
     }
 
     @Test

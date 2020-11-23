@@ -7,7 +7,8 @@ import com.jhyoon0801.toy.dto.*;
 import com.jhyoon0801.toy.service.RandomMoneyService;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/random-money")
+@RestController
+@RequestMapping(value={"/random-money"})
 public class RandomMoneyController {
 
     private static final int TOKEN_LENGTH = 3;
@@ -38,7 +39,7 @@ public class RandomMoneyController {
         return new Result(ErrorStatus.SUCCESS, null, resultData);
     }
 
-    @PutMapping("/{token}")
+    @PutMapping(value = "/{token}")
     public @ResponseBody Result receiveRandomMoney(@RequestHeader(name="X-USER-ID") String userId, @RequestHeader(name="X-ROOM-ID") String roomId, @PathVariable(required = true) String token){
 
         if( TOKEN_LENGTH != token.length()) {
@@ -49,7 +50,7 @@ public class RandomMoneyController {
         return new Result(ErrorStatus.SUCCESS, null, resultData);
     }
 
-    @GetMapping("/{token}")
+    @GetMapping(value = "/{token}")
     public @ResponseBody Result getRandomMoneyInfo(@RequestHeader(name="X-USER-ID") String userId, @RequestHeader(name="X-ROOM-ID") String roomId, @PathVariable(required = true, value = "token") String token){
 
         if( TOKEN_LENGTH != token.length()) {

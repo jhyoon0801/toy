@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ReceiveInfo {
-    private Integer seq;
+    private Integer distSeq;
     private Integer metaInfoSeq;
     private String receiverId;
     private Integer amount;

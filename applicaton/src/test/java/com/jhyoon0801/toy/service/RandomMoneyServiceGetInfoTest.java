@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class RandomMoneyServiceGetInfoTest {
@@ -48,27 +49,20 @@ public class RandomMoneyServiceGetInfoTest {
     private RandomMoneyInfoDto makeRandomMoneyInfoDto(){
         Date createdDate = DateUtils.addDays(new Date(), -2);
 
-        ReceiveInfoDto mockDataFirst = new ReceiveInfoDto();
-        mockDataFirst.setAmount(7000);
-        mockDataFirst.setReceiverId(this.firstReceiverUserId);
-
-        ReceiveInfoDto mockDataSecond = new ReceiveInfoDto();
-        mockDataSecond.setAmount(3000);
-        mockDataSecond.setReceiverId(this.secondReceiverUserId);
+        ReceiveInfoDto mockDataFirst = new ReceiveInfoDto(this.firstReceiverUserId, 7000);
+        ReceiveInfoDto mockDataSecond = new ReceiveInfoDto(this.secondReceiverUserId, 3000);
 
         List<ReceiveInfoDto> mockDataList = new ArrayList<>();
         mockDataList.add(mockDataFirst);
         mockDataList.add(mockDataSecond);
 
-        RandomMoneyInfoDto mockData = RandomMoneyInfoDto.builder()
-                .ownerId(this.ownerUserId)
-                .distributionSize(2)
-                .createdTimeStamp(new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ").format(createdDate))
-                .totalMoney(10000)
-                .receivedMoney(10000)
-                .receiveInfoDtoList(mockDataList)
-                .build();
-
+        RandomMoneyInfoDto mockData = new RandomMoneyInfoDto();
+        mockData.setOwnerId(this.ownerUserId);
+        mockData.setDistributionSize(2);
+        mockData.setCreteDatetime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ").format(createdDate));
+        mockData.setTotalMoney(10000);
+        mockData.setReceivedMoney(10000);
+        mockData.setReceiveInfoDtoList(mockDataList);
         return mockData;
     }
 
@@ -82,7 +76,7 @@ public class RandomMoneyServiceGetInfoTest {
 
         Assert.assertEquals(mockData.getTotalMoney(), result.getTotalMoney());
         Assert.assertEquals(mockData.getReceivedMoney(), result.getReceivedMoney());
-        Assert.assertEquals(mockData.getCreatedTimeStamp(), result.getCreatedTimeStamp());
+        Assert.assertEquals(mockData.getCreteDatetime(), result.getCreteDatetime());
         Assert.assertEquals(mockData.getReceiveInfoDtoList(), result.getReceiveInfoDtoList());
     }
 
