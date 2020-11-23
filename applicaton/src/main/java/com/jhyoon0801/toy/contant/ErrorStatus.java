@@ -4,6 +4,7 @@ public enum ErrorStatus {
 
     SUCCESS(200, 0, "success"),
     ALREADY_RECEIVE(200, 20001, "Already receive random money"),
+    ALL_RANDOM_MONEY_DISTRIBUTED(200, 20002, "All random money distributed"),
     INVALID_MONEY(400, 40001, "Invalid money"),
     INVALID_DISTRIBUTION_SIZE(400, 40002, "Invalid distribution size"),
     INVALID_TOKEN(400, 40003, "Invalid token"),

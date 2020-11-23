@@ -64,7 +64,11 @@ public class RandomMoneyServiceImpl implements RandomMoneyService {
         }
 
         randomMoneyDao.createTempReceiver(meta.getSeq(), userId);
-        return randomMoneyDao.updateRandomMoneyReceiveInfo(meta.getSeq(), userId, randomMoneyDao.getOrderOfReceiver(meta.getSeq(), userId));
+        int order = randomMoneyDao.getOrderOfReceiver(meta.getSeq(), userId);
+        if(order > meta.getDistributionSize()){
+            throw new RandomMoneyException(ErrorStatus.ALL_RANDOM_MONEY_DISTRIBUTED, "All random money has been distributed");
+        }
+        return randomMoneyDao.updateRandomMoneyReceiveInfo(meta.getSeq(), userId, order);
     }
 
     @Override
